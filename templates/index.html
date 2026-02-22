@@ -1,51 +1,127 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mercedes Car Price Prediction</title>
+    <title>Car Price Prediction</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            /* New background image */
+            background: url("https://www.auto-in-china.com/wp-content/uploads/2025/08/Mercedes-Benz-C-Class-2025-C-260-L-4MATIC-Sport-Edition-white-1.webp") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* push to right */
+        }
+
+        /* Form container aligned middle-right */
+        .form-container {
+            background: rgba(255, 255, 255, 0.95); /* light overlay */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+            width: 350px; /* decreased width */
+            margin-right: 50px; /* space from right */
+            color: #333;
+        }
+
+        h2 {
+            color: #2B2D42;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 26px; /* slightly smaller */
+            font-weight: bold;
+        }
+
+        select, input, button {
+            width: 95%; /* smaller width */
+            padding: 10px; /* smaller padding */
+            margin: 6px 0;
+            border-radius: 8px;
+            border: 1px solid #AAA;
+            font-size: 14px; /* smaller font */
+        }
+
+        select, input {
+            background-color: #FFF;
+            color: #000;
+        }
+
+        button {
+            background-color: #0077B6;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #005F86;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #006400;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h2>Enter Car Details</h2>
-    <form action="/predict" method="post">
-        Model: 
-        <select name="Model">
-            {% for m in options['Model'] %}
-                <option value="{{ m }}">{{ m }}</option>
-            {% endfor %}
-        </select><br><br>
+    <div class="form-container">
+        <h2>Car Price Prediction</h2>
 
-        Year: 
-        <select name="Year">
-            {% for y in options['Year'] %}
-                <option value="{{ y }}">{{ y }}</option>
-            {% endfor %}
-        </select><br><br>
+        <form action="/predict" method="post">
 
-        Color: 
-        <select name="Color">
-            {% for c in options['Color'] %}
-                <option value="{{ c }}">{{ c }}</option>
-            {% endfor %}
-        </select><br><br>
+            Model:
+            <select name="Model" required>
+                {% for m in options['Model'] %}
+                    <option value="{{ m }}">{{ m }}</option>
+                {% endfor %}
+            </select>
 
-        Fuel Type: 
-        <select name="Fuel_Type">
-            {% for f in options['Fuel Type'] %}
-                <option value="{{ f }}">{{ f }}</option>
-            {% endfor %}
-        </select><br><br>
+            Year:
+            <select name="Year" required>
+                {% for y in options['Year'] %}
+                    <option value="{{ y }}">{{ y }}</option>
+                {% endfor %}
+            </select>
 
-        Horsepower: <input type="number" name="Horsepower"><br><br>
+            Color:
+            <select name="Color" required>
+                {% for c in options['Color'] %}
+                    <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
 
-        Turbo: 
-        <select name="Turbo">
-            {% for t in options['Turbo'] %}
-                <option value="{{ t }}">{{ t }}</option>
-            {% endfor %}
-        </select><br><br>
+            Fuel Type:
+            <select name="Fuel_Type" required>
+                {% for f in options['Fuel Type'] %}
+                    <option value="{{ f }}">{{ f }}</option>
+                {% endfor %}
+            </select>
 
-        <button type="submit">Predict Price</button>
-    </form>
+            Horsepower:
+            <input type="number" name="Horsepower" placeholder="Enter Horsepower" required>
 
-    <h3>{{ prediction_text }}</h3>
+            Turbo:
+            <select name="Turbo" required>
+                {% for t in options['Turbo'] %}
+                    <option value="{{ t }}">{{ t }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Predict Price</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="result">
+                🏷️ {{ prediction_text }}
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
